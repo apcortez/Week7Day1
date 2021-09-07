@@ -10,5 +10,7 @@ namespace Week7Day1.Core.InterfaceRepositories
     public interface ILezioneRepository: IRepository<Lezione>
     {
         public Lezione GetByLezioneId(int id);
+        public List<Lezione> GetLezioniByCodice(string codice);
+        public List<Lezione> GetLezioniByNome(string nome);
     }
 }

@@ -10,7 +10,7 @@ namespace Week7Day1.Core.Entities
     {
         public string Telefono { get; set; }
 
-        public List<Lezione> Lezioni { get; set; }
+        public List<Lezione> Lezioni { get; set; } = new List<Lezione>();
 
         public override string ToString()
         {

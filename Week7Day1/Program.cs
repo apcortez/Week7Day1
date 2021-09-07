@@ -81,11 +81,50 @@ namespace Week7Day1
                 case 4:
                     EliminaCorso();
                     break;
+                case 5:
+                    VisualizzaDocenti();
+                    break;
+                case 6:
+                    InserisciNuovoDocente();
+                    break;
+                case 7:
+                    ModificaDocente();
+                    break;
+                case 8:
+                    EliminaDocente();
+                    break;
+                case 9:
+                    VisualizzaLezioni();
+                    break;
+                case 10:
+                    InserisciLezione();
+                    break;
+                case 11:
+                    ModificaLezione();
+                    break;
+                case 12:
+                    EliminaLezione();
+                    break;
+                case 13:
+                    VisualizzaLezioneByCodiceCorso();
+                    break;
+                case 14:
+                    VisualizzaLezioniByNomeCorso();
+                    break;
                 case 15:
                     VisualizzaStudenti();
                     break;
                 case 16:
                     InserisciStudente();
+                    break;
+                case 17:
+                    ModificaStudente();
+                    break;
+                case 18:
+                    EliminaStudente();
+                    break;
+                case 19:
+                    VisualizzaStudentiCorso();
                     break;
                 case 0:
                     return false;
@@ -93,9 +132,265 @@ namespace Week7Day1
             return true;
         }
 
+        private static void InserisciLezione()
+        {
+            //Chiedo le info per creare il nuovo studente
+            Console.WriteLine("Inserisci data e ora di inizio: ");
+            DateTime inizio = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Inserisci durata in giorni: ");
+            int durata = int.Parse(Console.ReadLine());
+            Console.WriteLine("Inserisci aula: ");
+            string aula = Console.ReadLine();
+            VisualizzaDocenti();
+            Console.WriteLine("Inserisci id docente a cui è assegnato la lazione: ");
+            int id = int.Parse(Console.ReadLine());
+            VisualizzaCorsi();
+            Console.WriteLine("Inserisci codice corso a cui è iscritto");
+            string codiceCorso = Console.ReadLine();
+
+            //lo creo
+            Lezione nuovaLezione = new Lezione();
+            nuovaLezione.DataOraInizio = inizio;
+            nuovaLezione.Durata = durata;
+            nuovaLezione.Aula = aula;
+            nuovaLezione.CodiceCorso = codiceCorso;
+            nuovaLezione.DocenteID = id;
+            //lo passo al bl
+            var esito = bl.InserisciNuovaLezione(nuovaLezione);
+            Console.WriteLine(esito);
+        }
+
+        private static void ModificaLezione()
+        {
+
+            Console.WriteLine("Ecco l'elenco delle lezioni: ");
+            VisualizzaLezioni();
+            Console.WriteLine("Quale lezione vuoi modificare? Inserisci l'id");
+            int id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Inserisci la nuova aula: ");
+            string nuovoaula = Console.ReadLine();
+
+            string esito = bl.ModificaLezione(id, nuovoaula);
+            Console.WriteLine(esito);
+        }
+
+        private static void VisualizzaLezioniByNomeCorso()
+        {
+
+            Console.WriteLine("Ecco l'elenco dei corsi disponibili");
+            VisualizzaCorsi();
+            Console.WriteLine("Quale corso vuoi visualizzare? Inserisci nome: ");
+            string nomecorso = Console.ReadLine();
+            var lezioniCorso = bl.GetAllLezioniCorsoByNome(nomecorso);
+            if (lezioniCorso.Count == 0)
+            {
+                Console.WriteLine("Lista vuota. Non ci sono lezioni del corso!");
+            }
+            else
+            {
+                Console.WriteLine("***Lista lezioni***");
+                foreach (var item in lezioniCorso)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+        }
+
+        private static void VisualizzaLezioneByCodiceCorso()
+        {
+            Console.WriteLine("Ecco l'elenco dei corsi disponibili");
+            VisualizzaCorsi();
+            Console.WriteLine("Quale corso vuoi visualizzare? Inserisci codice");
+            string codice = Console.ReadLine();
+            var lezioniCorso = bl.GetAllLezioniCorso(codice);
+            if (lezioniCorso.Count == 0)
+            {
+                Console.WriteLine("Lista vuota. Non ci sono lezioni del corso!");
+            }
+            else
+            {
+                Console.WriteLine("***Lista lezioni***");
+                foreach (var item in lezioniCorso)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+        }
+
+        private static void EliminaLezione()
+        {
+            VisualizzaLezioni();
+            Console.WriteLine("Quale lezione vuoi eliminare? Inserisci l'id");
+            int id = int.Parse(Console.ReadLine());
+
+            string esito = bl.EliminaLezione(id);
+            Console.WriteLine(esito);
+        }
+
+        private static void VisualizzaLezioni()
+        {
+            var lezioni = bl.GetAllLezioni();
+            if (lezioni.Count == 0)
+            {
+                Console.WriteLine("Lista vuota. Non ci sono lezioni!");
+            }
+            else
+            {
+                Console.WriteLine("***Lista lezioni***");
+                foreach (var item in lezioni)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+        }
+
+        private static void EliminaDocente()
+        {
+            Console.WriteLine("Ecco l'elenco dei docenti: ");
+            VisualizzaDocenti();
+            Console.WriteLine("Quale docente vuoi eliminare? Inserisci l'id");
+            int id = int.Parse(Console.ReadLine());
+
+            string esito = bl.EliminaDocente(id);
+            Console.WriteLine(esito);
+        }
+
+        private static void ModificaDocente()
+        {
+            Console.WriteLine("Ecco l'elenco dei docenti: ");
+            VisualizzaDocenti();
+            Console.WriteLine("Quale studente vuoi modificare? Inserisci l'id");
+            int id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Inserisci la nuova email: ");
+            string nuovoemail = Console.ReadLine();
+            Console.WriteLine("Inserisci il nuovo telefono: ");
+            string nuovotelefono = Console.ReadLine();
+
+            string esito = bl.ModificaDocente(id, nuovoemail, nuovotelefono);
+            Console.WriteLine(esito);
+        }
+
+        private static void InserisciNuovoDocente()
+        {
+            //Chiedo le info per creare il nuovo docente
+            Console.WriteLine("Inserisci nome");
+            string nome = Console.ReadLine();
+            Console.WriteLine("Inserisci cognome");
+            string cognome = Console.ReadLine();
+            Console.WriteLine("Inserisci email");
+            string email = Console.ReadLine();
+            Console.WriteLine("Inserisci telefono");
+            string telefono = Console.ReadLine();
+            
+
+            //lo creo
+            Docente nuovoDocente = new Docente();
+            nuovoDocente.Nome = nome;
+            nuovoDocente.Cognome = cognome;
+            nuovoDocente.Email = email;
+            nuovoDocente.Telefono = telefono;
+
+
+            //lo passo al bl
+            var esito = bl.InserisciNuovoDocente(nuovoDocente);
+            Console.WriteLine(esito);
+        }
+
+        private static void VisualizzaDocenti()
+        {
+            var docenti = bl.GetAllDocenti();
+            if (docenti.Count == 0)
+            {
+                Console.WriteLine("Lista vuota. Non ci sono docenti!");
+            }
+            else
+            {
+                Console.WriteLine("***Lista docenti***");
+                foreach (var item in docenti)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+        }
+
+        private static void VisualizzaStudentiCorso()
+        {
+            Console.WriteLine("Ecco l'elenco dei corsi disponibili");
+            VisualizzaCorsi();
+            Console.WriteLine("Quale corso vuoi visualizzare? ");
+            string codice = Console.ReadLine();
+            var studentiCorso = bl.GetAllStudentiCorso(codice);
+            if (studentiCorso.Count == 0)
+            {
+                Console.WriteLine("Lista vuota. Non ci sono studenti!");
+            }
+            else
+            {
+                Console.WriteLine("***Lista studenti***");
+                foreach (var item in studentiCorso)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+        }
+
+        private static void EliminaStudente()
+        {
+            Console.WriteLine("Ecco l'elenco degli studenti: ");
+            VisualizzaStudenti();
+            Console.WriteLine("Quale studente vuoi eliminare? Inserisci l'id");
+            int id = int.Parse(Console.ReadLine());
+
+            string esito = bl.EliminaStudente(id);
+            Console.WriteLine(esito);
+        }
+
+        private static void ModificaStudente()
+        {
+            Console.WriteLine("Ecco l'elenco degli studenti: ");
+            VisualizzaStudenti();
+            Console.WriteLine("Quale studente vuoi modificare? Inserisci l'id");
+            int id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Inserisci la nuova email: ");
+            string nuovoemail = Console.ReadLine();
+
+            string esito = bl.ModificaStudente(id, nuovoemail);
+            Console.WriteLine(esito);
+
+
+        }
+
         private static void InserisciStudente()
         {
-            throw new NotImplementedException();
+            //Chiedo le info per creare il nuovo studente
+            Console.WriteLine("Inserisci nome");
+            string nome = Console.ReadLine();
+            Console.WriteLine("Inserisci cognome");
+            string cognome = Console.ReadLine();
+            Console.WriteLine("Inserisci email");
+            string email = Console.ReadLine();
+            Console.WriteLine("Inserisci dat di nascita (formato aaaa-mm-gg)");
+            DateTime dataNascita = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Inserisci titolo studio");
+            string titoloStudio = Console.ReadLine();
+            VisualizzaCorsi();
+            Console.WriteLine("Inserisci codice corso a cui è iscritto");
+            string codiceCorso = Console.ReadLine();
+
+            //lo creo
+            Studente nuovoStudente = new Studente();
+            nuovoStudente.Nome = nome;
+            nuovoStudente.Cognome = cognome;
+            nuovoStudente.DataNascita = dataNascita;
+            nuovoStudente.Email = email;
+            nuovoStudente.TitoloStudio = titoloStudio;
+            nuovoStudente.CodiceCorso = codiceCorso;
+
+            //lo passo al bl
+            var esito = bl.InserisciNuovoStudente(nuovoStudente);
+            Console.WriteLine(esito);
+
+
         }
 
         private static void VisualizzaStudenti()

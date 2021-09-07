@@ -10,5 +10,7 @@ namespace Week7Day1.Core.InterfaceRepositories
     public interface IDocenteRepository : IRepository<Docente>
     {
         public Docente GetById(int id);
+
+        public Docente VerificaDocente(Docente docente);
     }
 }

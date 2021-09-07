@@ -22,7 +22,27 @@ namespace Week7Day1.Core.BusinessLayer
         public string ModificaCorso(string codiceCorsoDaModificare, string nuovoNome, string nuovaDescrizione);
 
         public string EliminaCorso(string codice);
-        public List<Studente> GetAllStudenti();
+
         #endregion
+        #region Funzionalità Studenti
+        //Visualizza tutti gli studenti
+        public List<Studente> GetAllStudenti();
+
+        public string InserisciNuovoStudente(Studente nuovoStudente);
+        public string EliminaStudente(int id);
+        public string ModificaStudente(int id, string nuovoemail);
+        public List<Studente> GetAllStudentiCorso(string codice);
+        #endregion
+
+        public List<Docente> GetAllDocenti();
+        public string InserisciNuovoDocente(Docente nuovoDocente);
+        public string EliminaDocente(int id);
+        public string ModificaDocente(int id, string nuovoemail, string nuovotelefono);
+        public List<Lezione> GetAllLezioni();
+        public string InserisciNuovaLezione(Lezione nuovaLezione);
+        public string ModificaLezione(int id, string nuovoaula);
+        public string EliminaLezione(int id);
+        public List<Lezione> GetAllLezioniCorso(string codice);
+        public List<Lezione> GetAllLezioniCorsoByNome(string nomecorso);
     }
 }

@@ -13,12 +13,27 @@ namespace Week7Day1.RepositoryMock
         public static List<Studente> studenti = new List<Studente>();
         public Studente Add(Studente item)
         {
-            throw new NotImplementedException();
+            if (studenti.Count == 0)
+            {
+                item.ID = 1;
+            }
+            else
+            {
+                item.ID = studenti.Max(s => s.ID) + 1;
+            }
+
+            var corso = RepositoryCorsiMock.corsi.FirstOrDefault(c => c.CodiceCorso == item.CodiceCorso);
+            item.Corso = corso;
+            corso.Studenti.Add(item);
+
+            studenti.Add(item);
+            return item;
         }
 
         public bool Delete(Studente item)
         {
-            throw new NotImplementedException();
+            studenti.Remove(item);
+            return true;
         }
 
         public List<Studente> Fetch()
@@ -26,14 +41,22 @@ namespace Week7Day1.RepositoryMock
             return studenti;
         }
 
+        public List<Studente> GetByCorso(string codicecorso)
+        {
+            return studenti.Where(s => s.CodiceCorso == codicecorso).ToList();
+
+        }
+
         public Studente GetById(int id)
         {
-            throw new NotImplementedException();
+            return studenti.Find(s => s.ID == id);
         }
 
         public Studente Update(Studente item)
         {
-            throw new NotImplementedException();
+            var old = studenti.FirstOrDefault(s => s.ID == item.ID);
+            old.Email = item.Email;
+            return item;
         }
     }
 }

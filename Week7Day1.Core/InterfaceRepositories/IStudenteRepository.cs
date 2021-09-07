@@ -10,5 +10,7 @@ namespace Week7Day1.Core.InterfaceRepositories
     public interface IStudenteRepository :IRepository<Studente>
     {
         public Studente GetById(int id);
+
+        public List<Studente> GetByCorso(string codicecorso);
     }
 }

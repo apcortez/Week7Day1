@@ -10,5 +10,6 @@ namespace Week7Day1.Core.InterfaceRepositories
     public interface ICorsoRepository: IRepository<Corso>
     {
         public Corso GetByCodice(string codice);
+        
     }
 }

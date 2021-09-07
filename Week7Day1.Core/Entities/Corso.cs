@@ -12,8 +12,8 @@ namespace Week7Day1.Core.Entities
         public string Nome { get; set; }
         public string Descrizone { get; set; }
 
-        public List<Studente> Studenti { get; set; }
-        public List<Lezione> Lezioni { get; set; }
+        public List<Studente> Studenti { get; set; } = new List<Studente>();
+        public List<Lezione> Lezioni { get; set; } = new List<Lezione>();
 
         public override string ToString()
         {

@@ -13,27 +13,57 @@ namespace Week7Day1.RepositoryMock
         public static List<Lezione> lezioni = new List<Lezione>();
         public Lezione Add(Lezione item)
         {
-            throw new NotImplementedException();
+            if (lezioni.Count == 0)
+            {
+                item.LezioneID = 1;
+            }
+            else
+            {
+                item.LezioneID = lezioni.Max(l => l.LezioneID) + 1;
+            }
+
+            var corso = RepositoryCorsiMock.corsi.FirstOrDefault(c => c.CodiceCorso == item.CodiceCorso);
+            var docente = RepositoryDocentiMock.docenti.FirstOrDefault(d => d.ID == item.DocenteID);
+            item.Corso = corso;
+            item.Docente = docente;
+            corso.Lezioni.Add(item);
+
+            lezioni.Add(item);
+            return item;
         }
 
         public bool Delete(Lezione item)
         {
-            throw new NotImplementedException();
+            lezioni.Remove(item);
+            return true;
         }
 
         public List<Lezione> Fetch()
         {
-            throw new NotImplementedException();
+            return lezioni;
         }
 
         public Lezione GetByLezioneId(int id)
         {
-            throw new NotImplementedException();
+            return lezioni.Find(l => l.LezioneID == id);
+        }
+
+        public List<Lezione> GetLezioniByCodice(string codice)
+        {
+            return lezioni.Where(l => l.CodiceCorso == codice).ToList();
+        }
+
+        public List<Lezione> GetLezioniByNome(string nome)
+        {
+            return lezioni.Where(l => l.Corso.Nome == nome).ToList();
         }
 
         public Lezione Update(Lezione item)
         {
-            throw new NotImplementedException();
+
+            var old = lezioni.FirstOrDefault(l => l.LezioneID == item.LezioneID);
+            old.Aula = item.Aula;
+            return item;
         }
     }
 }
